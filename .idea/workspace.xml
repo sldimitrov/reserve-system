@@ -5,11 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="380e91e9-7741-4f8a-a5f5-c447e683c23a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/const/coordinate-system.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/const/events.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/types/table.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/locales/bg/translations.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/locales/en/translations.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/base/Footer/Footer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/base/Footer/Footer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/base/Header/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/base/Header/Header.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/base/Header/style.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/base/Header/style.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/floor/RestaurantGraphFloor.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/floor/RestaurantGraphFloor.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,21 +35,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "feat/graph-view",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "D:\\repos\\myProjects\\reserve-system\\node_modules\\typescript\\lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feat/graph-view&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;D:\\repos\\myProjects\\reserve-system\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\repos\myProjects\reserve-system\public" />
       <recent name="D:\repos\myProjects\reserve-system\src\components\base\Header" />
       <recent name="D:\repos\myProjects\reserve-system\src\components\floor" />
       <recent name="D:\repos\myProjects\reserve-system\src\components\custom" />
@@ -70,7 +78,8 @@
       <workItem from="1745568657902" duration="1721000" />
       <workItem from="1745571114705" duration="1000" />
       <workItem from="1745571123777" duration="212000" />
-      <workItem from="1745571360996" duration="5527000" />
+      <workItem from="1745571360996" duration="6252000" />
+      <workItem from="1745578630046" duration="2543000" />
     </task>
     <servers />
   </component>
@@ -83,7 +92,6 @@
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/const/coordinate-system.ts</url>
           <line>1</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>

@@ -6,8 +6,10 @@ import {
   EVENTS_MOUSE_UP,
   EVENTS_RESIZE,
 } from '../../const/events.ts';
+import { useTranslation } from 'react-i18next';
 
 const RestaurantTableSystem = () => {
+  const { t } = useTranslation();
   const [backgroundImage, setBackgroundImage] = useState<string | null>(null);
   const [tables, setTables] = useState<Table[]>([]);
   const [isAdmin, setIsAdmin] = useState<boolean>(true);
@@ -350,22 +352,20 @@ const RestaurantTableSystem = () => {
       <div
         className={`${isAdmin ? 'bg-blue-600' : 'bg-green-600'} text-white p-4 flex flex-wrap justify-between items-center`}
       >
-        <h1 className="text-xl font-bold mr-4">
-          Restaurant {isAdmin ? 'Management' : 'Reservation'} System
-        </h1>
+        <h1 className="text-xl font-bold mr-4">{t('restaurantSystem')}</h1>
         <div className="flex flex-wrap space-x-2 mt-2 sm:mt-0">
           <button
             onClick={toggleMode}
             className={`py-1 px-3 rounded ${isAdmin ? 'bg-green-500' : 'bg-blue-500'}`}
           >
-            Switch to {isAdmin ? 'User' : 'Admin'} Mode
+            {t('switchTo')} {isAdmin ? t('admin') : t('user')}
           </button>
           {isAdmin && (
             <button
               onClick={saveLayout}
               className="py-1 px-3 rounded bg-yellow-500"
             >
-              Save Layout
+              {t('saveLayout')}
             </button>
           )}
         </div>
@@ -508,7 +508,9 @@ const RestaurantTableSystem = () => {
             // Admin Controls
             <>
               <div className="mb-6">
-                <h2 className="text-lg font-semibold mb-2">Restaurant Image</h2>
+                <h2 className="text-lg font-semibold mb-2">
+                  {t('restaurantImage')}
+                </h2>
                 <input
                   type="file"
                   accept="image/*"
@@ -520,12 +522,14 @@ const RestaurantTableSystem = () => {
                   onClick={() => fileInputRef.current?.click()}
                   className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
                 >
-                  Upload Image
+                  {t('uploadImage')}
                 </button>
               </div>
 
               <div className="mb-6">
-                <h2 className="text-lg font-semibold mb-2">Table Controls</h2>
+                <h2 className="text-lg font-semibold mb-2">
+                  {t('tableControls')}
+                </h2>
                 <div className="flex flex-wrap gap-2 sm:flex-nowrap">
                   <button
                     onClick={() => setIsAddingTable(!isAddingTable)}
@@ -535,7 +539,7 @@ const RestaurantTableSystem = () => {
                         : 'bg-green-500 hover:bg-green-600'
                     } text-white`}
                   >
-                    {isAddingTable ? 'Cancel' : 'Add Table'}
+                    {isAddingTable ? t('cancel') : t('addTable')}
                   </button>
 
                   <button
@@ -547,7 +551,7 @@ const RestaurantTableSystem = () => {
                         : 'bg-red-500 hover:bg-red-600'
                     } text-white`}
                   >
-                    Delete
+                    {t('delete')}
                   </button>
                 </div>
               </div>
@@ -692,20 +696,22 @@ const RestaurantTableSystem = () => {
               )}
 
               <div className="mb-6">
-                <h2 className="text-lg font-semibold mb-2">Layout Details</h2>
+                <h2 className="text-lg font-semibold mb-2">
+                  {t('layoutDetails')}
+                </h2>
                 <p className="text-sm text-gray-600">
-                  Total Tables: {tables.length}
+                  {t('totalTables')}: {tables.length}
                 </p>
                 <p className="text-sm text-gray-600">
-                  Total Seats:{' '}
+                  {t('totalSeats')}:{' '}
                   {tables.reduce((sum, table) => sum + table.seats, 0)}
                 </p>
                 <p className="text-sm text-gray-600">
-                  Reserved Tables:{' '}
+                  {t('reservedTables')}:{' '}
                   {tables.filter(table => table.reserved).length}
                 </p>
                 <p className="text-sm text-gray-600">
-                  Available Tables:{' '}
+                  {t('availableTables')}:{' '}
                   {tables.filter(table => !table.reserved).length}
                 </p>
               </div>

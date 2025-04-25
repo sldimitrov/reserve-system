@@ -6,3 +6,29 @@ li {
 li:hover {
   color: dodgerblue;
 }
+
+.language-toggle-btn {
+  background: linear-gradient(135deg, #4f46e5, #3b82f6);
+  color: white;
+  font-weight: bold;
+  padding: 8px 20px;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    background 0.3s ease;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  &:hover {
+    background: linear-gradient(135deg, #3b82f6, #4f46e5);
+    transform: scale(1.1);
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
