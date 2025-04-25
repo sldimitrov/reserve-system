@@ -15,7 +15,9 @@ li:hover {
   border-radius: 20px;
   border: none;
   cursor: pointer;
-  transition: transform 0.2s ease, background 0.3s ease;
+  transition:
+    transform 0.2s ease,
+    background 0.3s ease;
   font-size: 1rem;
   display: flex;
   align-items: center;
@@ -41,4 +43,3 @@ li:hover {
     outline: none;
   }
 }
-
