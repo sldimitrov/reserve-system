@@ -11,17 +11,26 @@ li:hover {
   background: linear-gradient(135deg, #4f46e5, #3b82f6);
   color: white;
   font-weight: bold;
-  padding: 8px 20px;
-  border-radius: 30px;
+  padding: 6px 20px;
+  border-radius: 20px;
   border: none;
   cursor: pointer;
-  transition:
-    transform 0.2s ease,
-    background 0.3s ease;
+  transition: transform 0.2s ease, background 0.3s ease;
   font-size: 1rem;
   display: flex;
   align-items: center;
   gap: 8px;
+
+  /* Hide text on small screens */
+  .language-text {
+    display: block;
+  }
+
+  @media (max-width: 768px) {
+    .language-text {
+      display: none; /* Hide text on smaller screens */
+    }
+  }
 
   &:hover {
     background: linear-gradient(135deg, #3b82f6, #4f46e5);
@@ -32,3 +41,4 @@ li:hover {
     outline: none;
   }
 }
+

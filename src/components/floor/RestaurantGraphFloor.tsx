@@ -396,7 +396,7 @@ const RestaurantTableSystem = () => {
                   width={SVG_WIDTH}
                   height={SVG_HEIGHT}
                   fill="transparent"
-                  onClick={handleSvgClick}
+                  onClick={() => handleSvgClick}
                   style={{ display: isDragging ? 'none' : 'block' }}
                 />
               </>
