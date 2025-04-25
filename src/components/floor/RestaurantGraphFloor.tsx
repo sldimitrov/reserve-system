@@ -1,11 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { DragOffset, Table } from '../../types/table.ts';
 import { SVG_HEIGHT, SVG_WIDTH } from '../../const/coordinate-system.ts';
-import {
-  EVENTS_MOUSE_MOVE,
-  EVENTS_MOUSE_UP,
-  EVENTS_RESIZE,
-} from '../../const/events.ts';
+import { EVENTS_MOUSE_MOVE, EVENTS_MOUSE_UP } from '../../const/events.ts';
 import { useTranslation } from 'react-i18next';
 
 const RestaurantTableSystem = () => {
@@ -17,7 +13,6 @@ const RestaurantTableSystem = () => {
   const [selectedTable, setSelectedTable] = useState<number | null>(null);
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const [dragOffset, setDragOffset] = useState<DragOffset>({ x: 0, y: 0 });
-  const [svgSize, setSvgSize] = useState({ width: 0, height: 0 });
   const [reservationDetails, setReservationDetails] = useState({
     name: '',
     time: '',
@@ -26,32 +21,6 @@ const RestaurantTableSystem = () => {
 
   const svgRef = useRef<SVGSVGElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-
-  // Update SVG container dimensions when window resizes
-  useEffect(() => {
-    const updateSvgSize = () => {
-      const svg = svgRef.current;
-      if (svg) {
-        const rect = svg.getBoundingClientRect();
-        setSvgSize({ width: rect.width, height: rect.height });
-      }
-    };
-
-    // Initial update
-    updateSvgSize();
-
-    // Update on resize
-    window.addEventListener(EVENTS_RESIZE, updateSvgSize);
-
-    // Also update when the background image loads
-    if (backgroundImage) {
-      const img = new Image();
-      img.onload = updateSvgSize;
-      img.src = backgroundImage;
-    }
-
-    return () => window.removeEventListener(EVENTS_RESIZE, updateSvgSize);
-  }, [backgroundImage]);
 
   // Handle image upload (Admin only)
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -87,7 +56,7 @@ const RestaurantTableSystem = () => {
   };
 
   // Handle SVG background click
-  const handleSvgClick = (e: React.MouseEvent<SVGSVGElement>) => {
+  const handleSvgClick = (e: React.MouseEvent<SVGRectElement>) => {
     // Only respond to direct clicks on the SVG background
     if (e.target === e.currentTarget) {
       if (!isAdmin || !isAddingTable || !backgroundImage) return;

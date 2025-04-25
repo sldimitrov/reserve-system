@@ -23,7 +23,10 @@ export default function Header() {
 
         {/* Language toggle button */}
         <button onClick={toggleLanguage} className="language-toggle-btn">
-          🌐 <span className="language-text">{i18n.language === 'bg' ? 'English' : 'Български'}</span>
+          🌐{' '}
+          <span className="language-text">
+            {i18n.language === 'bg' ? 'English' : 'Български'}
+          </span>
         </button>
 
         {/* Desktop menu */}
