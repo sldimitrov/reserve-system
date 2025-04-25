@@ -1,28 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
-
-interface Table {
-  id: number;
-  x: number;         // Position in SVG coordinate system
-  y: number;         // Position in SVG coordinate system
-  width: number;     // Width in SVG coordinate system
-  height: number;    // Height in SVG coordinate system
-  number: number;
-  type: 'rectangle' | 'round';
-  seats: number;
-  reserved: boolean;
-  reservationName?: string;
-  reservationTime?: string;
-  reservationPhone?: string;
-}
-
-interface DragOffset {
-  x: number;
-  y: number;
-}
-
-// Fixed SVG viewport dimensions - our virtual coordinate system
-const SVG_WIDTH = 1000;
-const SVG_HEIGHT = 1000;
+import { DragOffset, Table } from '../../types/table.ts';
+import { SVG_HEIGHT, SVG_WIDTH } from '../../const/coordinate-system.ts';
+import {
+  EVENTS_MOUSE_MOVE,
+  EVENTS_MOUSE_UP,
+  EVENTS_RESIZE,
+} from '../../const/events.ts';
 
 const RestaurantTableSystem = () => {
   const [backgroundImage, setBackgroundImage] = useState<string | null>(null);
@@ -36,7 +19,7 @@ const RestaurantTableSystem = () => {
   const [reservationDetails, setReservationDetails] = useState({
     name: '',
     time: '',
-    phone: ''
+    phone: '',
   });
 
   const svgRef = useRef<SVGSVGElement>(null);
@@ -56,7 +39,7 @@ const RestaurantTableSystem = () => {
     updateSvgSize();
 
     // Update on resize
-    window.addEventListener('resize', updateSvgSize);
+    window.addEventListener(EVENTS_RESIZE, updateSvgSize);
 
     // Also update when the background image loads
     if (backgroundImage) {
@@ -65,7 +48,7 @@ const RestaurantTableSystem = () => {
       img.src = backgroundImage;
     }
 
-    return () => window.removeEventListener('resize', updateSvgSize);
+    return () => window.removeEventListener(EVENTS_RESIZE, updateSvgSize);
   }, [backgroundImage]);
 
   // Handle image upload (Admin only)
@@ -81,7 +64,10 @@ const RestaurantTableSystem = () => {
   };
 
   // Convert screen coordinates to SVG coordinates
-  const screenToSvgCoordinates = (screenX: number, screenY: number): {x: number, y: number} => {
+  const screenToSvgCoordinates = (
+    screenX: number,
+    screenY: number
+  ): { x: number; y: number } => {
     const svg = svgRef.current;
     if (!svg) return { x: 0, y: 0 };
 
@@ -120,7 +106,7 @@ const RestaurantTableSystem = () => {
         number: tables.length + 1,
         type: 'rectangle', // Default shape
         seats: 4,
-        reserved: false
+        reserved: false,
       };
 
       setTables([...tables, newTable]);
@@ -139,14 +125,14 @@ const RestaurantTableSystem = () => {
         setReservationDetails({
           name: '',
           time: '',
-          phone: ''
+          phone: '',
         });
       } else {
         // Show existing reservation details
         setReservationDetails({
           name: table.reservationName || '',
           time: table.reservationTime || '',
-          phone: table.reservationPhone || ''
+          phone: table.reservationPhone || '',
         });
       }
     }
@@ -166,7 +152,7 @@ const RestaurantTableSystem = () => {
     // Calculate offset between mouse position and table position
     setDragOffset({
       x: x - table.x,
-      y: y - table.y
+      y: y - table.y,
     });
   };
 
@@ -183,16 +169,18 @@ const RestaurantTableSystem = () => {
     const { x, y } = screenToSvgCoordinates(clientX, clientY);
 
     // Update table position
-    setTables(tables.map(table => {
-      if (table.id === selectedTable) {
-        return {
-          ...table,
-          x: x - dragOffset.x,
-          y: y - dragOffset.y
-        };
-      }
-      return table;
-    }));
+    setTables(
+      tables.map(table => {
+        if (table.id === selectedTable) {
+          return {
+            ...table,
+            x: x - dragOffset.x,
+            y: y - dragOffset.y,
+          };
+        }
+        return table;
+      })
+    );
   };
 
   // End dragging
@@ -206,12 +194,14 @@ const RestaurantTableSystem = () => {
     property: K,
     value: Table[K]
   ) => {
-    setTables(tables.map(table => {
-      if (table.id === id) {
-        return { ...table, [property]: value };
-      }
-      return table;
-    }));
+    setTables(
+      tables.map(table => {
+        if (table.id === id) {
+          return { ...table, [property]: value };
+        }
+        return table;
+      })
+    );
   };
 
   // Delete selected table (Admin only)
@@ -225,24 +215,26 @@ const RestaurantTableSystem = () => {
   const makeReservation = () => {
     if (isAdmin || selectedTable === null) return;
 
-    setTables(tables.map(table => {
-      if (table.id === selectedTable) {
-        return {
-          ...table,
-          reserved: true,
-          reservationName: reservationDetails.name,
-          reservationTime: reservationDetails.time,
-          reservationPhone: reservationDetails.phone
-        };
-      }
-      return table;
-    }));
+    setTables(
+      tables.map(table => {
+        if (table.id === selectedTable) {
+          return {
+            ...table,
+            reserved: true,
+            reservationName: reservationDetails.name,
+            reservationTime: reservationDetails.time,
+            reservationPhone: reservationDetails.phone,
+          };
+        }
+        return table;
+      })
+    );
 
     setSelectedTable(null);
     setReservationDetails({
       name: '',
       time: '',
-      phone: ''
+      phone: '',
     });
   };
 
@@ -255,30 +247,34 @@ const RestaurantTableSystem = () => {
       const selectedTableObj = tables.find(table => table.id === selectedTable);
       if (!selectedTableObj || !selectedTableObj.reserved) return;
 
-      if (!window.confirm('Are you sure you want to cancel this reservation?')) {
+      if (
+        !window.confirm('Are you sure you want to cancel this reservation?')
+      ) {
         return;
       }
     }
 
-    setTables(tables.map(table => {
-      if (table.id === selectedTable) {
-        return {
-          ...table,
-          reserved: false,
-          reservationName: undefined,
-          reservationTime: undefined,
-          reservationPhone: undefined
-        };
-      }
-      return table;
-    }));
+    setTables(
+      tables.map(table => {
+        if (table.id === selectedTable) {
+          return {
+            ...table,
+            reserved: false,
+            reservationName: undefined,
+            reservationTime: undefined,
+            reservationPhone: undefined,
+          };
+        }
+        return table;
+      })
+    );
 
     if (!isAdmin) {
       setSelectedTable(null);
       setReservationDetails({
         name: '',
         time: '',
-        phone: ''
+        phone: '',
       });
     }
   };
@@ -294,10 +290,13 @@ const RestaurantTableSystem = () => {
   const saveLayout = () => {
     if (!isAdmin) return;
     try {
-      localStorage.setItem('restaurantLayout', JSON.stringify({
-        tables,
-        backgroundImage
-      }));
+      localStorage.setItem(
+        'restaurantLayout',
+        JSON.stringify({
+          tables,
+          backgroundImage,
+        })
+      );
       alert('Layout saved successfully!');
     } catch (error) {
       alert('Failed to save layout!');
@@ -309,7 +308,8 @@ const RestaurantTableSystem = () => {
     try {
       const savedLayout = localStorage.getItem('restaurantLayout');
       if (savedLayout) {
-        const { tables: savedTables, backgroundImage: savedImage } = JSON.parse(savedLayout);
+        const { tables: savedTables, backgroundImage: savedImage } =
+          JSON.parse(savedLayout);
         setTables(savedTables);
         setBackgroundImage(savedImage);
       }
@@ -336,20 +336,22 @@ const RestaurantTableSystem = () => {
       }
     };
 
-    document.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mouseup', handleMouseUp);
+    document.addEventListener(EVENTS_MOUSE_MOVE, handleMouseMove);
+    document.addEventListener(EVENTS_MOUSE_UP, handleMouseUp);
 
     return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseup', handleMouseUp);
+      document.removeEventListener(EVENTS_MOUSE_MOVE, handleMouseMove);
+      document.removeEventListener(EVENTS_MOUSE_UP, handleMouseUp);
     };
   }, [isDragging, selectedTable, tables]);
 
   return (
     <div className="flex flex-col h-screen bg-gray-100">
-      <div className={`${isAdmin ? 'bg-blue-600' : 'bg-green-600'} text-white p-4 flex flex-wrap justify-between items-center`}>
+      <div
+        className={`${isAdmin ? 'bg-blue-600' : 'bg-green-600'} text-white p-4 flex flex-wrap justify-between items-center`}
+      >
         <h1 className="text-xl font-bold mr-4">
-          Restaurant Table {isAdmin ? 'Management' : 'Reservation'} System
+          Restaurant {isAdmin ? 'Management' : 'Reservation'} System
         </h1>
         <div className="flex flex-wrap space-x-2 mt-2 sm:mt-0">
           <button
@@ -407,7 +409,9 @@ const RestaurantTableSystem = () => {
                 fill="#999"
                 fontSize="20"
               >
-                {isAdmin ? 'Upload a restaurant image to get started' : 'No restaurant layout available'}
+                {isAdmin
+                  ? 'Upload a restaurant image to get started'
+                  : 'No restaurant layout available'}
               </text>
             )}
 
@@ -415,8 +419,8 @@ const RestaurantTableSystem = () => {
             {tables.map(table => (
               <g
                 key={table.id}
-                onClick={(e) => handleTableClick(e, table)}
-                onMouseDown={(e) => handleDragStart(e, table)}
+                onClick={e => handleTableClick(e, table)}
+                onMouseDown={e => handleDragStart(e, table)}
                 style={{ cursor: isAdmin ? 'move' : 'pointer' }}
                 pointerEvents="all"
               >
@@ -426,10 +430,14 @@ const RestaurantTableSystem = () => {
                     y={table.y}
                     width={table.width}
                     height={table.height}
-                    fill={table.reserved ? 'rgba(254, 202, 202, 0.7)' : 'rgba(255, 255, 255, 0.7)'}
+                    fill={
+                      table.reserved
+                        ? 'rgba(254, 202, 202, 0.7)'
+                        : 'rgba(255, 255, 255, 0.7)'
+                    }
                     stroke={selectedTable === table.id ? '#3b82f6' : '#374151'}
                     strokeWidth="2"
-                    onClick={(e) => e.stopPropagation()}
+                    onClick={e => e.stopPropagation()}
                   />
                 ) : (
                   <ellipse
@@ -437,10 +445,14 @@ const RestaurantTableSystem = () => {
                     cy={table.y + table.height / 2}
                     rx={table.width / 2}
                     ry={table.height / 2}
-                    fill={table.reserved ? 'rgba(254, 202, 202, 0.7)' : 'rgba(255, 255, 255, 0.7)'}
+                    fill={
+                      table.reserved
+                        ? 'rgba(254, 202, 202, 0.7)'
+                        : 'rgba(255, 255, 255, 0.7)'
+                    }
                     stroke={selectedTable === table.id ? '#3b82f6' : '#374151'}
                     strokeWidth="2"
-                    onClick={(e) => e.stopPropagation()}
+                    onClick={e => e.stopPropagation()}
                   />
                 )}
                 <text
@@ -476,8 +488,19 @@ const RestaurantTableSystem = () => {
           <div className="md:hidden flex justify-between mb-4">
             <h2 className="text-lg font-semibold">Control Panel</h2>
             <button className="text-gray-500">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
               </svg>
             </button>
           </div>
@@ -507,7 +530,9 @@ const RestaurantTableSystem = () => {
                   <button
                     onClick={() => setIsAddingTable(!isAddingTable)}
                     className={`flex-1 py-2 px-4 rounded ${
-                      isAddingTable ? 'bg-red-500 hover:bg-red-600' : 'bg-green-500 hover:bg-green-600'
+                      isAddingTable
+                        ? 'bg-red-500 hover:bg-red-600'
+                        : 'bg-green-500 hover:bg-green-600'
                     } text-white`}
                   >
                     {isAddingTable ? 'Cancel' : 'Add Table'}
@@ -517,7 +542,9 @@ const RestaurantTableSystem = () => {
                     onClick={deleteSelectedTable}
                     disabled={selectedTable === null}
                     className={`flex-1 py-2 px-4 rounded ${
-                      selectedTable === null ? 'bg-gray-300 cursor-not-allowed' : 'bg-red-500 hover:bg-red-600'
+                      selectedTable === null
+                        ? 'bg-gray-300 cursor-not-allowed'
+                        : 'bg-red-500 hover:bg-red-600'
                     } text-white`}
                   >
                     Delete
@@ -527,37 +554,63 @@ const RestaurantTableSystem = () => {
 
               {selectedTable !== null && (
                 <div className="mb-6">
-                  <h2 className="text-lg font-semibold mb-2">Table Properties</h2>
+                  <h2 className="text-lg font-semibold mb-2">
+                    Table Properties
+                  </h2>
                   {tables.map(table => {
                     if (table.id === selectedTable) {
                       return (
                         <div key={table.id} className="space-y-3">
                           <div className="grid grid-cols-2 gap-2">
                             <div>
-                              <label className="block text-sm font-medium text-gray-700">Number</label>
+                              <label className="block text-sm font-medium text-gray-700">
+                                Number
+                              </label>
                               <input
                                 type="number"
                                 value={table.number}
-                                onChange={(e) => updateTableProperty(table.id, 'number', parseInt(e.target.value) || 0)}
+                                onChange={e =>
+                                  updateTableProperty(
+                                    table.id,
+                                    'number',
+                                    parseInt(e.target.value) || 0
+                                  )
+                                }
                                 className="mt-1 block w-full border border-gray-300 rounded p-2"
                               />
                             </div>
                             <div>
-                              <label className="block text-sm font-medium text-gray-700">Seats</label>
+                              <label className="block text-sm font-medium text-gray-700">
+                                Seats
+                              </label>
                               <input
                                 type="number"
                                 value={table.seats}
-                                onChange={(e) => updateTableProperty(table.id, 'seats', parseInt(e.target.value) || 0)}
+                                onChange={e =>
+                                  updateTableProperty(
+                                    table.id,
+                                    'seats',
+                                    parseInt(e.target.value) || 0
+                                  )
+                                }
                                 className="mt-1 block w-full border border-gray-300 rounded p-2"
                               />
                             </div>
                           </div>
 
                           <div>
-                            <label className="block text-sm font-medium text-gray-700">Shape</label>
+                            <label className="block text-sm font-medium text-gray-700">
+                              Shape
+                            </label>
                             <select
                               value={table.type}
-                              onChange={(e) => updateTableProperty(table.id, 'type', e.target.value as 'rectangle' | 'round')}
+                              onChange={e =>
+                                updateTableProperty(
+                                  table.id,
+                                  'type',
+                                  e.target.value as 'rectangle' | 'round'
+                                )
+                              }
                               className="mt-1 block w-full border border-gray-300 rounded p-2"
                             >
                               <option value="rectangle">Rectangle</option>
@@ -567,22 +620,38 @@ const RestaurantTableSystem = () => {
 
                           <div className="grid grid-cols-2 gap-2">
                             <div>
-                              <label className="block text-sm font-medium text-gray-700">Width</label>
+                              <label className="block text-sm font-medium text-gray-700">
+                                Width
+                              </label>
                               <input
                                 type="number"
                                 value={table.width}
-                                onChange={(e) => updateTableProperty(table.id, 'width', parseInt(e.target.value) || 20)}
+                                onChange={e =>
+                                  updateTableProperty(
+                                    table.id,
+                                    'width',
+                                    parseInt(e.target.value) || 20
+                                  )
+                                }
                                 min="20"
                                 max="200"
                                 className="mt-1 block w-full border border-gray-300 rounded p-2"
                               />
                             </div>
                             <div>
-                              <label className="block text-sm font-medium text-gray-700">Height</label>
+                              <label className="block text-sm font-medium text-gray-700">
+                                Height
+                              </label>
                               <input
                                 type="number"
                                 value={table.height}
-                                onChange={(e) => updateTableProperty(table.id, 'height', parseInt(e.target.value) || 20)}
+                                onChange={e =>
+                                  updateTableProperty(
+                                    table.id,
+                                    'height',
+                                    parseInt(e.target.value) || 20
+                                  )
+                                }
                                 min="20"
                                 max="200"
                                 className="mt-1 block w-full border border-gray-300 rounded p-2"
@@ -593,10 +662,18 @@ const RestaurantTableSystem = () => {
                           {table.reserved && (
                             <>
                               <div className="pt-2 border-t border-gray-200">
-                                <h3 className="font-medium text-gray-700">Reservation Details</h3>
-                                <p className="text-sm text-gray-600">Name: {table.reservationName}</p>
-                                <p className="text-sm text-gray-600">Time: {table.reservationTime}</p>
-                                <p className="text-sm text-gray-600">Phone: {table.reservationPhone}</p>
+                                <h3 className="font-medium text-gray-700">
+                                  Reservation Details
+                                </h3>
+                                <p className="text-sm text-gray-600">
+                                  Name: {table.reservationName}
+                                </p>
+                                <p className="text-sm text-gray-600">
+                                  Time: {table.reservationTime}
+                                </p>
+                                <p className="text-sm text-gray-600">
+                                  Phone: {table.reservationPhone}
+                                </p>
                                 <button
                                   onClick={cancelReservation}
                                   className="mt-2 w-full bg-red-500 text-white py-1 px-4 rounded hover:bg-red-600 text-sm"
@@ -620,13 +697,16 @@ const RestaurantTableSystem = () => {
                   Total Tables: {tables.length}
                 </p>
                 <p className="text-sm text-gray-600">
-                  Total Seats: {tables.reduce((sum, table) => sum + table.seats, 0)}
+                  Total Seats:{' '}
+                  {tables.reduce((sum, table) => sum + table.seats, 0)}
                 </p>
                 <p className="text-sm text-gray-600">
-                  Reserved Tables: {tables.filter(table => table.reserved).length}
+                  Reserved Tables:{' '}
+                  {tables.filter(table => table.reserved).length}
                 </p>
                 <p className="text-sm text-gray-600">
-                  Available Tables: {tables.filter(table => !table.reserved).length}
+                  Available Tables:{' '}
+                  {tables.filter(table => !table.reserved).length}
                 </p>
               </div>
             </>
@@ -634,7 +714,9 @@ const RestaurantTableSystem = () => {
             // User Reservation Controls
             <>
               <div className="mb-6">
-                <h2 className="text-lg font-semibold mb-2">Table Reservation</h2>
+                <h2 className="text-lg font-semibold mb-2">
+                  Table Reservation
+                </h2>
                 {selectedTable === null ? (
                   <p className="text-sm text-gray-600">
                     Click on a table to make a reservation
@@ -651,10 +733,18 @@ const RestaurantTableSystem = () => {
 
                             {table.reserved ? (
                               <div className="p-3 bg-red-100 rounded mb-4">
-                                <h3 className="font-medium text-red-800">Already Reserved</h3>
-                                <p className="text-sm text-red-700">Name: {table.reservationName}</p>
-                                <p className="text-sm text-red-700">Time: {table.reservationTime}</p>
-                                <p className="text-sm text-red-700">Phone: {table.reservationPhone}</p>
+                                <h3 className="font-medium text-red-800">
+                                  Already Reserved
+                                </h3>
+                                <p className="text-sm text-red-700">
+                                  Name: {table.reservationName}
+                                </p>
+                                <p className="text-sm text-red-700">
+                                  Time: {table.reservationTime}
+                                </p>
+                                <p className="text-sm text-red-700">
+                                  Phone: {table.reservationPhone}
+                                </p>
                                 <button
                                   onClick={cancelReservation}
                                   className="mt-2 w-full bg-red-500 text-white py-1 px-4 rounded hover:bg-red-600 text-sm"
@@ -665,32 +755,53 @@ const RestaurantTableSystem = () => {
                             ) : (
                               <div className="space-y-3">
                                 <div>
-                                  <label className="block text-sm font-medium text-gray-700">Your Name</label>
+                                  <label className="block text-sm font-medium text-gray-700">
+                                    Your Name
+                                  </label>
                                   <input
                                     type="text"
                                     value={reservationDetails.name}
-                                    onChange={(e) => setReservationDetails({...reservationDetails, name: e.target.value})}
+                                    onChange={e =>
+                                      setReservationDetails({
+                                        ...reservationDetails,
+                                        name: e.target.value,
+                                      })
+                                    }
                                     className="mt-1 block w-full border border-gray-300 rounded p-2"
                                     placeholder="Enter your name"
                                   />
                                 </div>
 
                                 <div>
-                                  <label className="block text-sm font-medium text-gray-700">Reservation Time</label>
+                                  <label className="block text-sm font-medium text-gray-700">
+                                    Reservation Time
+                                  </label>
                                   <input
                                     type="datetime-local"
                                     value={reservationDetails.time}
-                                    onChange={(e) => setReservationDetails({...reservationDetails, time: e.target.value})}
+                                    onChange={e =>
+                                      setReservationDetails({
+                                        ...reservationDetails,
+                                        time: e.target.value,
+                                      })
+                                    }
                                     className="mt-1 block w-full border border-gray-300 rounded p-2"
                                   />
                                 </div>
 
                                 <div>
-                                  <label className="block text-sm font-medium text-gray-700">Phone Number</label>
+                                  <label className="block text-sm font-medium text-gray-700">
+                                    Phone Number
+                                  </label>
                                   <input
                                     type="tel"
                                     value={reservationDetails.phone}
-                                    onChange={(e) => setReservationDetails({...reservationDetails, phone: e.target.value})}
+                                    onChange={e =>
+                                      setReservationDetails({
+                                        ...reservationDetails,
+                                        phone: e.target.value,
+                                      })
+                                    }
                                     className="mt-1 block w-full border border-gray-300 rounded p-2"
                                     placeholder="Enter phone number"
                                   />
@@ -698,9 +809,15 @@ const RestaurantTableSystem = () => {
 
                                 <button
                                   onClick={makeReservation}
-                                  disabled={!reservationDetails.name || !reservationDetails.time || !reservationDetails.phone}
+                                  disabled={
+                                    !reservationDetails.name ||
+                                    !reservationDetails.time ||
+                                    !reservationDetails.phone
+                                  }
                                   className={`w-full py-2 px-4 rounded ${
-                                    !reservationDetails.name || !reservationDetails.time || !reservationDetails.phone
+                                    !reservationDetails.name ||
+                                    !reservationDetails.time ||
+                                    !reservationDetails.phone
                                       ? 'bg-gray-300 cursor-not-allowed'
                                       : 'bg-green-500 hover:bg-green-600'
                                   } text-white`}
@@ -721,18 +838,22 @@ const RestaurantTableSystem = () => {
               <div className="mb-6">
                 <h2 className="text-lg font-semibold mb-2">Available Tables</h2>
                 <p className="text-sm text-gray-600">
-                  Total Available: {tables.filter(table => !table.reserved).length} / {tables.length}
+                  Total Available:{' '}
+                  {tables.filter(table => !table.reserved).length} /{' '}
+                  {tables.length}
                 </p>
                 <div className="mt-2 space-y-1">
-                  {tables.filter(table => !table.reserved).map(table => (
-                    <div
-                      key={table.id}
-                      className="p-2 bg-white rounded border border-gray-200 text-sm cursor-pointer hover:bg-gray-50"
-                      onClick={() => setSelectedTable(table.id)}
-                    >
-                      Table {table.number} - {table.seats} seats
-                    </div>
-                  ))}
+                  {tables
+                    .filter(table => !table.reserved)
+                    .map(table => (
+                      <div
+                        key={table.id}
+                        className="p-2 bg-white rounded border border-gray-200 text-sm cursor-pointer hover:bg-gray-50"
+                        onClick={() => setSelectedTable(table.id)}
+                      >
+                        Table {table.number} - {table.seats} seats
+                      </div>
+                    ))}
                 </div>
               </div>
             </>

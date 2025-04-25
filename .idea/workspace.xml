@@ -5,6 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="380e91e9-7741-4f8a-a5f5-c447e683c23a" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/const/coordinate-system.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/const/events.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/types/table.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/floor/RestaurantGraphFloor.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/floor/RestaurantGraphFloor.tsx" afterDir="false" />
     </list>
@@ -67,11 +70,23 @@
       <workItem from="1745568657902" duration="1721000" />
       <workItem from="1745571114705" duration="1000" />
       <workItem from="1745571123777" duration="212000" />
-      <workItem from="1745571360996" duration="4906000" />
+      <workItem from="1745571360996" duration="5527000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/const/coordinate-system.ts</url>
+          <line>1</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
