@@ -5,21 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="380e91e9-7741-4f8a-a5f5-c447e683c23a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.prettierrc" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eslint.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/eslint.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/base/Footer/Footer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/base/Footer/Footer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/base/Header/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/base/Header/Header.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/base/Header/style.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/base/Header/style.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/floor/RestaurantFloorPlan.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/floor/RestaurantFloorPlan.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/floor/RestaurantGraphFloor.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/floor/RestaurantGraphFloor.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vite.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/vite.config.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,7 +67,7 @@
       <workItem from="1745568657902" duration="1721000" />
       <workItem from="1745571114705" duration="1000" />
       <workItem from="1745571123777" duration="212000" />
-      <workItem from="1745571360996" duration="2846000" />
+      <workItem from="1745571360996" duration="4906000" />
     </task>
     <servers />
   </component>
